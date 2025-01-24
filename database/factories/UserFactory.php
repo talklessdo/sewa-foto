@@ -32,7 +32,7 @@ class UserFactory extends Factory
             'avatar' => 'avatar.png',
             'role' => Arr::random(['fotografer', 'editor', 'customer']),
             'phone' => fake()->numerify('############'),
-            'password' => static::$password ??= Hash::make('password'),
+            'password' => static::$password ??= Hash::make('123456'),
             // 'remember_token' => Str::random(10),
         ];
     }
