@@ -2,48 +2,23 @@
     <div class="container-fluid">
         <h1 class="text-center pt-4">Pilih Paket</h1>
         <div class="row my-4">
-            <div class="col-lg-4 col-6">
-              <!-- small box -->
-              <div class="small-box bg-info">
-                <div class="inner">
-                  <h3>Paket 1</h3>
-  
-                  <p>New Orders</p>
-                </div>
-                <div class="icon">
-                  <i class="ion ion-cube"></i>
-                </div>
-                <a href="#" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
+          @foreach ($data as $item)
+              
+          <div class="col-lg-4 col-6">
+            <!-- small box -->
+            <div class="small-box bg-{{ $item->warna }}">
+              <div class="inner">
+                <h3>{{ $item->name }}</h3>
+
+                <p>{{ $item->description }}</p>
               </div>
-            </div>
-            <div class="col-lg-4 col-6">
-              <!-- small box -->
-              <div class="small-box bg-warning">
-                <div class="inner">
-                  <h3>Paket 2</h3>
-  
-                  <p>New Orders</p>
-                </div>
-                <div class="icon">
-                  <i class="ion ion-cube"></i>
-                </div>
-                <a href="#" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
+              <div class="icon">
+                <i class="ion ion-cube"></i>
               </div>
+              <a href="#" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-            <div class="col-lg-4 col-6">
-              <!-- small box -->
-              <div class="small-box bg-success">
-                <div class="inner">
-                  <h3>Paket 3</h3>
-  
-                  <p>New Orders</p>
-                </div>
-                <div class="icon">
-                  <i class="ion ion-cube"></i>
-                </div>
-                <a href="#" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
+          </div>
+          @endforeach
         </div>
         <!-- Gallery -->
         <h1 class="mb-5 text-center">Galeri Foto</h1>
