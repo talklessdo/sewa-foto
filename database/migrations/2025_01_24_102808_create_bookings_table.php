@@ -13,14 +13,23 @@ return new class extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained(
-                table: 'users',indexName: 'bookings_user_id'
+            $table->string('kode_booking')->unique();
+            $table->foreignId('cs_id')->constrained(
+                table: 'users',indexName: 'bookings_cs_id'
+            )->onDelete('cascade');
+            $table->foreignId('fotograf_id')->constrained(
+                table: 'users',indexName: 'bookings_fotograf_id'
+            )->onDelete('cascade');
+            $table->foreignId('editor_id')->constrained(
+                table: 'users',indexName: 'bookings_editor_id'
             )->onDelete('cascade');
             $table->foreignId('paket_id')->constrained(
                 table:'pakets', indexName: 'bookings_paket_id'
             )->onDelete('cascade');
             $table->date('booking_date');
-            $table->enum('status', ['pending', 'confirmed', 'canceled'])->default('pending');
+            $table->string('payment')->nullable();
+            $table->integer('durasi');
+            $table->enum('status', ['pending', 'confirmed', 'canceled','waiting'])->default('pending');
             $table->timestamps();
         });
     }

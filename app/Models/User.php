@@ -3,9 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\Fotografer;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
@@ -17,11 +19,13 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    // protected $fillable = [
+    //     'name',
+    //     'email',
+    //     'password',
+    // ];
+
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -45,4 +49,22 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // diaktifkan ketika ingin menjalankan factory
+    // public function fotografer()
+    // {
+    //     return $this->hasOne(Fotografer::class);
+    // }
+    // public function editor()
+    // {
+    //     return $this->hasOne(Editor::class);
+    // }
+
+    public function fotografer(): HasMany{
+        return $this->hasMany(Fotografer::class);
+    }
+    public function editor(): HasMany{
+        return $this->hasMany(Editor::class);
+    }
+    
 }

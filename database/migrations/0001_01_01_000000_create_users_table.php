@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('avatar')->nullable();
             $table->string('phone')->nullable();
             $table->enum('role',['pemilik','admin','fotografer','editor', 'customer'])->default('customer');
+            // $table->enum('jk',['pria','wanita'])->default('customer');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

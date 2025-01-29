@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pakets', function (Blueprint $table) {
+        Schema::create('editors', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('slug');
-            $table->text('description')->nullable();
-            $table->float('price');
-            // $table->integer(column: 'duration'); // durasi dalam jam
-            $table->string('warna');
-            $table->text('sample');
+            $table->string('email_editor');
+            $table->foreign('email_editor')
+                  ->references('email')
+                  ->on('users')
+                  ->onDelete('cascade');
+            $table->enum('job',['order','no_order']);
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pakets');
+        Schema::dropIfExists('editors');
     }
 };

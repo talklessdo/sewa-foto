@@ -2,6 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
+use App\Models\Editor;
+use App\Models\Fotografer;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
@@ -24,17 +27,56 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->companyEmail(),
-            // 'email_verified_at' => now(),
-            'alamat' => fake()->address(),
-            'avatar' => 'avatar.png',
-            'role' => Arr::random(['fotografer', 'editor', 'customer']),
-            'phone' => fake()->numerify('############'),
-            'password' => static::$password ??= Hash::make('123456'),
-            // 'remember_token' => Str::random(10),
+        // Definisikan jumlah per role
+        $roleCount = [
+            'pemilik' => 1,
+            'admin' => 1,
+            'editor' => 10,
+            'fotografer' => 10,
+            'customer' => 15
         ];
+
+        // Buat koleksi user sesuai dengan jumlah role yang ditentukan
+        $userDataArray = collect($roleCount)->flatMap(function ($count, $role) {
+            // Buat $count user untuk setiap role
+            return collect(range(1, $count))->map(function () use ($role) {
+                // Buat data user
+                $userData = [
+                    'name' => fake()->name(),
+                    'email' => fake()->unique()->companyEmail(),
+                    'alamat' => fake()->address(),
+                    'avatar' => 'avatar.png',
+                    'role' => $role,
+                    'phone' => fake()->numerify('############'),
+                    'password' => static::$password ??= Hash::make('123456'),
+                ];
+
+                // Buat user baru
+                $user = User::create($userData);
+
+                // Jika role adalah "fotografer", buat data fotografer
+                if ($role === 'fotografer') {
+                    Fotografer::create([
+                        'id' => $user->id,
+                        'email_fotografer' => $user->email,
+                        'job' => 'no_order',
+                    ]);
+                } elseif ($role === 'editor') {
+                    Editor::create([
+                        'id' => $user->id,
+                        'email_editor' => $user->email,
+                        'job' => 'no_order',
+                    ]);
+                } 
+
+                return $userData;
+            });
+        })->toArray(); // Mengubah koleksi menjadi array
+
+        return $userDataArray; // Mengembalikan hasil
+
+
+
     }
 
     /**

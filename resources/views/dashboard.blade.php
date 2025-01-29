@@ -15,7 +15,7 @@
               <div class="icon">
                 <i class="ion ion-cube"></i>
               </div>
-              <a href="#" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
+              <a style="cursor: pointer" data-slug="{{ $item->slug }}" onclick="more(this)" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           @endforeach
@@ -55,4 +55,10 @@
         </div>
   <!-- Gallery -->
     </div>
+    <script>
+      function more(e) {
+        var slug = e.getAttribute('data-slug');
+        window.location.href = 'detail/' + slug;
+      }
+    </script>
 </x-layout>
